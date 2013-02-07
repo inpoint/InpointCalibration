@@ -1,0 +1,11 @@
+<resources>
+
+    <string name="app_name">InpointCalibrationTool</string>
+    <string name="Inpoint_notification">Calibration Tool</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_wifi_scanner">CalibrationTool</string>
+    <string name="scan">Go</string>
+    <string name="coordinate_notification">Input coordinates here</string>
+    <string name="room_notification">Input room name here</string>
+
+</resources>
