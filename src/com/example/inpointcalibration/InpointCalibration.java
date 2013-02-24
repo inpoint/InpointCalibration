@@ -132,9 +132,10 @@ public class InpointCalibration extends Activity implements OnClickListener {
 				Log.d(TAG, "onClick() wifi.startScan()");
 
 			}
-			wifi.startScan();
+			
 			try {
-				Thread.sleep(700);
+				wifi.startScan();
+				Thread.sleep(1300);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -142,9 +143,10 @@ public class InpointCalibration extends Activity implements OnClickListener {
 			ArrayList<List<ScanResult>> ScanList = new ArrayList<List<ScanResult>>(
 					5);
 			for (int scancount = 0; scancount < 5; scancount++) {
-				wifi.startScan();
+				
 				try {
-					Thread.sleep(700);
+					wifi.startScan();
+					Thread.sleep(1300);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
