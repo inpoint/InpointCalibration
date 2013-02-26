@@ -132,10 +132,9 @@ public class InpointCalibration extends Activity implements OnClickListener {
 				Log.d(TAG, "onClick() wifi.startScan()");
 
 			}
-			
+			wifi.startScan();
 			try {
-				wifi.startScan();
-				Thread.sleep(1300);
+				Thread.sleep(700);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -144,9 +143,9 @@ public class InpointCalibration extends Activity implements OnClickListener {
 					5);
 			for (int scancount = 0; scancount < 5; scancount++) {
 				
+				wifi.startScan();
 				try {
-					wifi.startScan();
-					Thread.sleep(1300);
+					Thread.sleep(700);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -342,7 +341,7 @@ public class InpointCalibration extends Activity implements OnClickListener {
 				try {
 					HttpClient httpclient = new DefaultHttpClient();
 					HttpPost httppost = new HttpPost(
-							"http://inpoint.pdp.fi/wlan/measurement.php");
+							"http://inpoint.pdp.fi/wlan/LibeRouter.php");
 
 					// send xml through http post
 					StringEntity se = new StringEntity(xml, HTTP.UTF_8);
