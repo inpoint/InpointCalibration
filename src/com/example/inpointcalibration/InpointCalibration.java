@@ -4,56 +4,30 @@ import java.util.HashMap;
 import java.util.List;
 
 import java.io.*;
-import java.net.URLEncoder;
-
-import android.accounts.Account;
-import android.accounts.AccountManager;
-import android.accounts.AccountManagerCallback;
-import android.accounts.AccountManagerFuture;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.AlertDialog.*;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.IntentFilter;
-import android.content.DialogInterface;
-import android.content.DialogInterface.*;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
-import android.net.wifi.WifiConfiguration;
-import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.KeyEvent;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
-import android.provider.Settings.Secure;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHttpResponse;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
-
-import android.provider.Settings;
-import android.provider.Settings.Secure;
 
 public class InpointCalibration extends Activity implements OnClickListener {
 	private static final String TAG = "CalibrationTool";
@@ -212,7 +186,6 @@ public class InpointCalibration extends Activity implements OnClickListener {
 				Log.d(TAG, "onReceive() message: " + message);
 			}
 
-			HashMap<String, Double> map_sigals = new HashMap<String, Double>();
 			HashMap<String, Double> map_sig = new HashMap<String, Double>();
 			HashMap<String, Double> map_num = new HashMap<String, Double>();
 			// TODO Compare 5 scan results and Calculate an average value
@@ -251,27 +224,34 @@ public class InpointCalibration extends Activity implements OnClickListener {
 			for (int i = 0; i < 5; i++) {
 				List<ScanResult> res = ScanList.get(i);
 				for (int j = 0; j < res.size(); j++) {
-					if (!map_var.containsKey(res.get(j).BSSID)) {
-						map_var.put(
-								res.get(j).BSSID,
-								(Double.valueOf(res.get(j).level) - Double
-										.valueOf(map_avg.get(res.get(j).BSSID)
-												.doubleValue()))
-										* (Double.valueOf(res.get(j).level) - Double
-												.valueOf(map_avg.get(
-														res.get(j).BSSID)
-														.doubleValue())));
-					} else {
-						map_var.put(
-								res.get(j).BSSID,
-								(Double.valueOf(map_var.get(res.get(j).BSSID))
-										.doubleValue() + (Double.valueOf(res
-										.get(j).level) - Double.valueOf(map_avg
-										.get(res.get(j).BSSID).doubleValue()))
-										* (Double.valueOf(res.get(j).level) - Double
-												.valueOf(map_avg.get(
-														res.get(j).BSSID)
-														.doubleValue()))));
+					if (Double.valueOf(map_num.get(res.get(j).BSSID)
+							.doubleValue()) >= 3) {
+						if (!map_var.containsKey(res.get(j).BSSID)) {
+							map_var.put(
+									res.get(j).BSSID,
+									(Double.valueOf(res.get(j).level) - Double
+											.valueOf(map_avg.get(
+													res.get(j).BSSID)
+													.doubleValue()))
+											* (Double.valueOf(res.get(j).level) - Double
+													.valueOf(map_avg.get(
+															res.get(j).BSSID)
+															.doubleValue())));
+						} else {
+							map_var.put(
+									res.get(j).BSSID,
+									(Double.valueOf(
+											map_var.get(res.get(j).BSSID))
+											.doubleValue() + (Double
+											.valueOf(res.get(j).level) - Double
+											.valueOf(map_avg.get(
+													res.get(j).BSSID)
+													.doubleValue()))
+											* (Double.valueOf(res.get(j).level) - Double
+													.valueOf(map_avg.get(
+															res.get(j).BSSID)
+															.doubleValue()))));
+						}
 					}
 				}
 			}
