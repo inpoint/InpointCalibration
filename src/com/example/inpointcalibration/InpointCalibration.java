@@ -108,17 +108,17 @@ public class InpointCalibration extends Activity implements OnClickListener {
 			}
 			wifi.startScan();
 			try {
-				Thread.sleep(700);
+				Thread.sleep(2000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 
 			ArrayList<List<ScanResult>> ScanList = new ArrayList<List<ScanResult>>(
-					5);
-			for (int scancount = 0; scancount < 5; scancount++) {
+					10);
+			for (int scancount = 0; scancount < 10; scancount++) {
 				wifi.startScan();
 				try {
-					Thread.sleep(700);
+					Thread.sleep(1300);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -188,9 +188,9 @@ public class InpointCalibration extends Activity implements OnClickListener {
 
 			HashMap<String, Double> map_sig = new HashMap<String, Double>();
 			HashMap<String, Double> map_num = new HashMap<String, Double>();
-			// TODO Compare 5 scan results and Calculate an average value
+			// TODO Compare 10 scan results and Calculate an average value
 			// List<ScanResult> average;
-			for (int i = 0; i < 5; i++) {
+			for (int i = 0; i < 10; i++) {
 				List<ScanResult> res = ScanList.get(i);
 				for (int j = 0; j < res.size(); j++) {
 					if (!map_sig.containsKey(res.get(j).BSSID)) {
@@ -221,7 +221,7 @@ public class InpointCalibration extends Activity implements OnClickListener {
 			}
 
 			HashMap<String, Double> map_var = new HashMap<String, Double>(); // variance
-			for (int i = 0; i < 5; i++) {
+			for (int i = 0; i < 10; i++) {
 				List<ScanResult> res = ScanList.get(i);
 				for (int j = 0; j < res.size(); j++) {
 					if (Double.valueOf(map_num.get(res.get(j).BSSID)
